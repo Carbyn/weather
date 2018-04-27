@@ -1,4 +1,7 @@
 <?php
+/*
+ * cities came from http://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding-abroad
+ */
 namespace Explorer;
 class City {
     
@@ -8,15 +11,14 @@ class City {
         if (self::$cities) {
             return self::$cities;
         }
-        $json_path = APPLICATION_PATH.'/application/library/Explorer/cities.json';
-        if (!@file_exists($json_path)) {
+        $cities_path = APPLICATION_PATH.'/application/library/Explorer/cities.txt';
+        if (!@file_exists($cities_path)) {
             return false;
         }
-        $data = json_decode(file_get_contents($json_path), true);
-        foreach($data as $prov) {
-            foreach($prov['cities'] as $city) {
-                self::$cities[] = preg_replace('/市$/', '', $city['name']);
-            }
+        $data = file_get_contents($cities_path);
+        $data = explode("\n", trim($data));
+        foreach($data as $city) {
+            self::$cities[] = preg_replace('/市$/', '', $city);
         }
         return self::$cities;
     }
