@@ -1,1 +1,1 @@
-convert test.jpeg -size 320 test.gif
+convert test.jpeg -resize 320x test.gif

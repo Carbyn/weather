@@ -3,3 +3,5 @@ crontab/*.log
 weather_data
 uploads
 static
+*.swo
+*.swp
