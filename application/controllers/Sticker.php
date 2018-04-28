@@ -15,7 +15,7 @@ class StickerController extends Yaf\Controller_Abstract {
 	        @mkdir($static_path);
 	    }
 
-	    $files= $this->getRequest()->getFiles();
+	    $files = $this->getRequest()->getFiles();
 	    if (empty($files[$name])) {
 	        echo json_encode(['status' => -2]);
 	        return;

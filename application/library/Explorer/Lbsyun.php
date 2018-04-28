@@ -35,9 +35,25 @@ class Lbsyun {
         if (date('H') < 18) {
             $day1 = date('Ymd', time() - 86400);
             $day2 = date('Ymd', time());
+            $day1_extra = [
+                'title' => '昨天',
+                'md' => date('n.d', time() - 86400),
+            ];
+            $day2_extra = [
+                'title' => '今天',
+                'md' => date('n.d', time()),
+            ];
         } else {
             $day1 = date('Ymd', time());
             $day2 = date('Ymd', time() + 86400);
+            $day1_extra = [
+                'title' => '今天',
+                'md' => date('n.d', time()),
+            ];
+            $day2_extra = [
+                'title' => '明天',
+                'md' => date('n.d', time() + 86400),
+            ];
         }
 
         $day1_path = self::$weather_path.$day1.'/'.$location.'.json';
@@ -46,9 +62,11 @@ class Lbsyun {
         $day1_weather = $day2_weather = [];
         if (@file_exists($day1_path)) {
             $day1_weather = @json_decode(@file_get_contents($day1_path), true);
+            $day1_weather = array_merge($day1_weather, $day1_extra);
         }
         if (@file_exists($day2_path)) {
             $day2_weather = @json_decode(@file_get_contents($day2_path), true);
+            $day2_weather = array_merge($day2_weather, $day2_extra);
         }
         return compact('day1_weather', 'day2_weather');
     }
