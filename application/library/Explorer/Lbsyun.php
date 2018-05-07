@@ -38,10 +38,12 @@ class Lbsyun {
             $day1_extra = [
                 'title' => '昨天',
                 'md' => date('n.d', time() - 86400),
+                'day' => self::getDay(date('N', time() - 86400)),
             ];
             $day2_extra = [
                 'title' => '今天',
                 'md' => date('n.d', time()),
+                'day' => self::getDay(date('N', time())),
             ];
         } else {
             $day1 = date('Ymd', time());
@@ -49,10 +51,12 @@ class Lbsyun {
             $day1_extra = [
                 'title' => '今天',
                 'md' => date('n.d', time()),
+                'day' => self::getDay(date('N', time())),
             ];
             $day2_extra = [
                 'title' => '明天',
                 'md' => date('n.d', time() + 86400),
+                'day' => self::getDay(date('N', time() + 86400)),
             ];
         }
 
@@ -69,6 +73,11 @@ class Lbsyun {
             $day2_weather = array_merge($day2_weather, $day2_extra);
         }
         return compact('day1_weather', 'day2_weather');
+    }
+
+    private static function getDay($day_no) {
+        static $days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+        return $days[$day_no - 1];
     }
 
     private static function save($location, $weather) {
