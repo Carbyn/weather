@@ -11,9 +11,11 @@ class WeatherController extends Yaf\Controller_Abstract {
 		$weather['tips'] = '你丫不用穿了，裸奔吧！';
 		$weather['timestamp'] = time();
 		$weather['is_night'] = date('H') > 18 ? 1 : 0;
+		$data['status'] = empty($weather['day2_weather']) ? -1 : 0;
+		$data['weather'] = $weather;
 
 		header('Content-Type: application/json');
-		echo json_encode($weather);
+		echo json_encode($data);
 	}
 
 }
